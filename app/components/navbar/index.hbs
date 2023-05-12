@@ -1,0 +1,28 @@
+<section class="shadow-lg bg-ember-black">
+  <div class="container flex items-center justify-between px-6 py-4 mx-auto md:px-0">
+    <img class="w-28" src="/images/ember-logo.svg" alt="logo Emberjs">
+    <nav class="hidden text-xs uppercase text-ember-linen md:block">
+      <ul class="flex">
+        <li class="px-4 py-2 font-semibold text-ember">Inicio</li>
+        <li class="px-4 py-2 hover:text-ember">Mascotas</li>
+        <li class="px-4 py-2 hover:text-ember">Sobre Mi</li>
+      </ul>
+    </nav>
+    <nav {{on 'click' this.openMobileNav}} class="text-2xl text-ember-white hover:text-ember md:hidden">
+      <i class="fa-solid fa-bars" />
+    </nav>
+  </div>
+</section>
+{{!-- navbar mobile --}}
+{{#if this.showMobileNav}}
+<section class="absolute z-10 w-screen h-screen backdrop-blur-sm bg-ember-black/70 backdrop-brightness-50">
+  <i {{on 'click' this.closeMobileNav}} class="absolute text-4xl hover:text-ember right-6 top-6 fa-solid fa-xmark text-ember-linen"></i>
+  <nav class="text-4xl font-thin uppercase">
+    <ul class="flex flex-col items-center justify-center w-screen h-screen space-y-24 text-ember-linen">
+      <li class="font-semibold text-ember">Inicio</li>
+      <li class="hover:text-ember">Mascotas</li>
+      <li class="hover:text-ember">Sobre Mi</li>
+    </ul>
+  </nav>
+</section>
+{{/if}}
