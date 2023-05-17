@@ -12,15 +12,10 @@ module('Integration | Component | navbar', function (hooks) {
 
     await render(hbs`<Navbar />`);
 
-    assert.dom(this.element).hasText('');
+    assert
+      .dom(this.element)
+      .hasText('Inicio Mascotas Sobre Mi', 'Navbar items menu OK');
 
-    // Template block usage:
-    await render(hbs`
-      <Navbar>
-        template block text
-      </Navbar>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    // await this.pauseTest();
   });
 });

@@ -12,15 +12,13 @@ module('Integration | Component | footer', function (hooks) {
 
     await render(hbs`<Footer />`);
 
-    assert.dom(this.element).hasText('');
+    assert
+      .dom(this.element)
+      .hasText(
+        'Todos los derechos reservados 2023. Creado con por mcmpbll783',
+        'Footer Copyright OK'
+      );
 
-    // Template block usage:
-    await render(hbs`
-      <Footer>
-        template block text
-      </Footer>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    // await this.pauseTest();
   });
 });
