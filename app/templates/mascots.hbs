@@ -1,4 +1,44 @@
-{{page-title "Mascots"}}
-<div class="container mx-auto">
-  <h1>Mascots Working!</h1>
+{{page-title "Mascotas"}}
+<div class="container px-4 mx-auto mt-16 mb-20 md:px-0">
+  <section class="flex flex-col justify-between sm:flex-row">
+    <h1 class="text-4xl font-semibold text-center md:text-left md:text-3xl">Mascotas</h1>
+    <button class="px-6 py-2 mt-4 text-base rounded-full shadow sm:mt-0 sm:text-xs text-ember-white bg-ember-light-blue hover:bg-ember-blue">
+      <i class="mr-2 fa-solid fa-plus" />
+      agregar
+    </button>
+  </section>
+  <section class="flex flex-col mt-6 md:flex-row">
+    <div class="flex flex-col justify-around sm:flex-row md:justify-start w-12/12 md:w-2/12 md:flex-col">
+      <h3 class="text-lg font-light tracking-wider">Filtrar</h3>
+      <form {{on 'change' this.onSubmit}} class="flex-1 pl-2 mt-2 text-sm">
+        <div class="flex justify-between sm:justify-around md:flex-col md:space-y-2">
+          <p class="flex items-center space-x-2">
+            <input id="all" name="filter" type="radio" value="all" checked />
+            <label for="all" >Todos</label>
+          </p>
+          <p class="flex items-center space-x-2">
+            <input id="tomster" name="filter" type="radio" value="Tomster" />
+            <label for="tomster" >Tomster</label>
+          </p>
+          <p class="flex items-center space-x-2">
+            <input id="zoey" name="filter" type="radio" value="Zoey" />
+            <label for="zoey" >Zoey</label>
+          </p>
+          <p class="flex items-center space-x-2">
+            <input id="friends" name="filter" type="radio" value="Amigos" />
+            <label for="friends" >Amigos</label>
+          </p>
+        </div>
+      </form>
+    </div>
+    <div class="mt-6 w-12/12 md:w-10/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">1</div>
+      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">2</div>
+      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">3</div>
+      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">4</div>
+      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">5</div>
+    </div>
+  </section>
 </div>
+
+{{log 'filter value' this.filterValue}}

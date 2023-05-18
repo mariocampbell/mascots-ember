@@ -5,3 +5,15 @@
 .active {
   @apply font-semibold text-ember;
 }
+
+input[type="radio"] + label {
+  @apply tracking-wider;
+}
+
+input[type="radio"]:checked {
+  @apply w-2 h-2 rounded-full appearance-none ring-ember-light-blue ring-offset-2 ring-1 bg-ember-light-blue;
+}
+
+input[type="radio"]:checked + label {
+  @apply text-ember-blue;
+}
