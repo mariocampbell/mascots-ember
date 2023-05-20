@@ -1,0 +1,14 @@
+<section class="relative flex flex-col items-center justify-between p-6 shadow hover:border-t-4 border-ember-light-blue rounded-xl bg-ember-white">
+  <i data-test-edit class="absolute fa-solid text-ember-light-blue fa-pen-to-square right-6 top-6"/>
+  <div class="flex items-center justify-center h-full">
+    <img data-test-avatar class="w-36" src="/images/mascots/{{@image}}" alt={{@title}}>
+  </div>
+  <div class="flex flex-col-reverse items-center justify-between w-full mt-4 font-semibold tracking-wide sm:flex-row md:flex-col-reverse text-ember">
+    <h2 data-test-title>{{@title}}</h2>
+    <div class="text-xs md:mb-1 text-ember-yellow">
+      <Repeat @times={{@favorite}}>
+        <i class="fa-solid fa-star"/>
+      </Repeat>
+    </div>
+  </div>
+</section>

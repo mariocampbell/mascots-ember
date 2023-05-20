@@ -6,6 +6,9 @@ module.exports = {
       sans: ['Roboto', 'sans-serif'],
     },
     extend: {
+      screens: {
+        xs: '480px',
+      },
       colors: {
         ember: '#BD3122',
         'ember-burnt': '#9B2918',
