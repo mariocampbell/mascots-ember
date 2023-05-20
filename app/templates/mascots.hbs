@@ -2,7 +2,7 @@
 <div class="container px-4 mx-auto mt-16 mb-20 md:px-0">
   <section class="flex flex-col justify-between sm:flex-row">
     <h1 class="text-4xl font-semibold text-center md:text-left md:text-3xl">Mascotas</h1>
-    <button class="px-6 py-2 mt-4 text-base rounded-full shadow sm:mt-0 sm:text-xs text-ember-white bg-ember-light-blue hover:bg-ember-blue" type="button">
+    <button {{on 'click' (fn this.drawer.toggle)}} class="px-6 py-2 mt-4 text-base rounded-full shadow sm:mt-0 sm:text-xs text-ember-white bg-ember-light-blue hover:bg-ember-blue" type="button">
       <i class="mr-2 fa-solid fa-plus" />
       agregar
     </button>
@@ -35,22 +35,20 @@
       <Card
         @image="tomster.webp"
         @title="Classic Tomster"
-        @favorite={{5}}
+        @stars={{5}}
       />
       <Card
         @image="zoey.webp"
         @title="Classic Zoey"
-        @favorite={{4}}
+        @stars={{5}}
       />
       <Card
         @image="ember-octane.webp"
         @title="Ember Octane"
-        @favorite={{3}}
+        @stars={{4}}
       />
       <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">4</div>
       <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">5</div>
     </div>
   </section>
 </div>
-
-{{log 'filter value' this.filterValue}}

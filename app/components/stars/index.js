@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 
 export default class RepeatComponent extends Component {
-  times = this.args.times || 5;
+  repeat = this.args.repeat || 5;
 
-  get array() {
-    return Array.from({ length: this.times });
+  get count() {
+    return Array.from({ length: this.repeat });
   }
 }
