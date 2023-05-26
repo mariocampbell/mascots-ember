@@ -4,24 +4,33 @@
   <section class="flex flex-col h-full w-80 bg-ember-white">
     <header class="flex items-center justify-between px-6 border-b-2 py-7 text-ember-white bg-ember-blue border-ember-blue">
       <h1 class="text-xl">{{if false 'Agregar' 'Editar'}} Mascota</h1>
-      <i {{on 'click' (fn this.drawer.toggle)}} class="text-2xl hover:text-ember fa-solid fa-xmark text-ember-linen"/>
+      <i {{on 'click' this.drawer.toggle}} class="text-2xl hover:text-ember fa-solid fa-xmark text-ember-linen" />
     </header>
 
     <main class="flex-1 p-6 overflow-auto space-y-4">
 
-      <div
-        {{on 'mouseenter' this.mouseEnter}}
-        {{on 'mouseleave' this.mouseLeave}}
-        class="flex flex-col items-center justify-center h-40 mx-auto my-4 mb-6"
-      >
-        <div class="relative overflow-hidden rounded-lg">
-          <div class="absolute {{if this.editAvatar '' 'hidden' }} flex items-center justify-center w-full h-full text-4xl text-ember-white bg-ember-black/50">
-            <i class="fa-solid fa-camera opacity-80"/>
+      <form {{on 'change' this.selectedImage}}>
+        <label
+          for="change-avatar"
+          {{on 'mouseenter' this.mouseEnter}}
+          {{on 'mouseleave' this.mouseLeave}}
+          class="flex flex-col items-center justify-center h-40 mx-auto my-4 mb-6"
+        >
+          <div class="relative overflow-hidden rounded-lg">
+            <div class="absolute {{if this.editAvatar '' 'hidden' }} flex items-center justify-center w-full h-full text-4xl text-ember-white bg-ember-black/50">
+              <i class="fa-solid fa-camera opacity-80"/>
+            </div>
+            <img class="max-h-full" src="{{this.imageSource}}" alt="Classic Tomster" />
+            <input
+            id="change-avatar"
+            type="file"
+            accept="image/png, image/jpeg, image/svg+xml, image/webp"
+            class="hidden"
+          />
           </div>
-          <img class="max-h-full" src="/images/mascots/tomster.webp" alt="Classic Tomster" />
-        </div>
-        <p class="mt-2 text-xs text-ember-gray">classic-tomster.webp</p>
-      </div>
+        </label>
+        <p class="mt-2 text-xs text-center text-ember-gray">{{this.imgName}}</p>
+      </form>
 
       <div>
         <label class="ml-2 text-sm text-ember-gray" for="title">Título</label>
@@ -59,9 +68,35 @@
       </div>
 
     </main>
-    <footer class="flex justify-between px-6 py-6 text-sm">
-      <button class="px-6 py-2 border-2 rounded-full hover:bg-ember hover:text-ember-white hover:border-ember text-ember-light-blue border-ember-light-blue" type="button">eliminar</button>
-      <button class="px-6 py-2 rounded-full hover:bg-ember-blue hover:border-ember-blue bg-ember-light-blue text-ember-white" type="button">agregar</button>
+    <footer>
+      {{#if this.showModalDelete}}
+      <div class="flex flex-col items-center px-6 py-6 text-sm font-light text-center text-ember-gray space-y-4">
+        <div class="flex justify-end w-full">
+          <i {{on 'click' this.closeModalDelete}} class="px-2 text-xl hover:text-ember fa-solid fa-xmark text-ember" />
+        </div>
+        <p>Está seguro que desear eliminar ésta mascota?</p>
+        <div class="flex justify-center w-full">
+          <button
+            type="button"
+            {{on 'click' (fn this.deleteMascot '1')}}
+            class="px-6 py-2 border-2 rounded-full hover:bg-ember hover:text-ember-white hover:border-ember text-ember border-ember"
+          >eliminar</button>
+        </div>
+      </div>
+      {{else}}
+      <div class="flex justify-between px-6 py-6 text-sm">
+        <button
+          {{on 'click' this.openModalDelete}}
+          class="px-6 py-2 border-2 rounded-full hover:bg-ember hover:text-ember-white hover:border-ember text-ember-light-blue border-ember-light-blue"
+          type="button"
+        >eliminar</button>
+        <button
+          type="button"
+          {{on 'click' this.addMascot}}
+          class="px-6 py-2 rounded-full hover:bg-ember-blue hover:border-ember-blue bg-ember-light-blue text-ember-white"
+        >agregar</button>
+      </div>
+      {{/if}}
     </footer>
   </section>
 </section>
