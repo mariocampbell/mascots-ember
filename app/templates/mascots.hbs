@@ -32,21 +32,14 @@
       </form>
     </div>
     <div class="mt-6 w-12/12 md:w-10/12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-      <Card
-        @image="tomster.webp"
-        @title="Classic Tomster"
-        @stars={{5}}
-      />
-      <Card
-        @image="zoey.webp"
-        @title="Classic Zoey"
-        @stars={{5}}
-      />
-      <Card
-        @image="ember-octane.webp"
-        @title="Ember Octane"
-        @stars={{4}}
-      />
+      {{#each this.allMascots as |mascot|}}
+        <Card
+          @id={{mascot.id}}
+          @title={{mascot.title}}
+          @image={{mascot.image}}
+          @stars={{mascot.stars}}
+        />
+      {{/each}}
       <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">4</div>
       <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">5</div>
     </div>

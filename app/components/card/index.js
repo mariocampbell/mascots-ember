@@ -5,12 +5,13 @@ import { service } from '@ember/service';
 
 export default class CardComponent extends Component {
   @service drawer;
+  @service mascots;
 
   @tracked showEditButton = false;
 
   @action
-  handleClickEdit(title) {
-    console.log('edit', title);
+  handleClickEdit(id) {
+    this.mascots.find(id);
     this.drawer.toggle();
   }
 

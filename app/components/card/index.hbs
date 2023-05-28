@@ -6,7 +6,7 @@
   {{#if this.showEditButton}}
     <i
       data-test-edit
-      {{on 'click' (fn this.handleClickEdit @title)}}
+      {{on 'click' (fn this.handleClickEdit @id)}}
       class="absolute cursor-pointer fa-solid fa-pen-to-square text-ember-light-blue right-6 top-6"
     />
   {{/if}}

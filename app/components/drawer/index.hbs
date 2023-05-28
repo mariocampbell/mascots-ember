@@ -1,10 +1,10 @@
 {{#if this.drawer.show}}
 <section class="fixed z-20 flex w-screen h-screen">
-  <div {{on 'click' this.drawer.toggle}} class="flex-1 opacity-80 bg-ember-black" />
+  <div {{on 'click' this.clearDrawer}} class="flex-1 opacity-80 bg-ember-black" />
   <section class="flex flex-col h-full w-80 bg-ember-white">
     <header class="flex items-center justify-between px-6 border-b-2 py-7 text-ember-white bg-ember-blue border-ember-blue">
-      <h1 class="text-xl">{{if false 'Agregar' 'Editar'}} Mascota</h1>
-      <i {{on 'click' this.drawer.toggle}} class="text-2xl hover:text-ember fa-solid fa-xmark text-ember-linen" />
+      <h1 class="text-xl">{{if this.selectedMascotIsEmpty 'Agregar' 'Editar'}} Mascota</h1>
+      <i {{on 'click' this.clearDrawer}} class="text-2xl hover:text-ember fa-solid fa-xmark text-ember-linen" />
     </header>
 
     <main class="flex-1 p-6 overflow-auto space-y-4">
@@ -22,50 +22,66 @@
             </div>
             <img class="max-h-full" src="{{this.imageSource}}" alt="Classic Tomster" />
             <input
-            id="change-avatar"
-            type="file"
-            accept="image/png, image/jpeg, image/svg+xml, image/webp"
-            class="hidden"
-          />
+              id="change-avatar"
+              type="file"
+              accept="image/png, image/jpeg, image/svg+xml, image/webp"
+              class="hidden"
+            />
           </div>
         </label>
-        <p class="mt-2 text-xs text-center text-ember-gray">{{this.imgName}}</p>
+        <p class="mt-2 text-xs text-center text-ember-gray">{{this.imageName}}</p>
       </form>
 
-      <div>
-        <label class="ml-2 text-sm text-ember-gray" for="title">Título</label>
-        <Input
-        id="title"
-        @type="text"
-        @value="Classic Tomster"
-        placeholder="ingrese titulo"
-        class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+      <form class="space-y-4" {{on 'change' this.changeInputs}}>
+        <div>
+          <label class="ml-2 text-sm text-ember-gray" for="title">Título</label>
+          <input
+            id="title"
+            type="text"
+            value={{this.mascots.selected.title}}
+            placeholder="ingrese titulo"
+            class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+            required
           />
-      </div>
+          {{#if this.errorTitle}}
+          <p class="py-1 ml-4 text-xs text-red-600">Deber completar este campo</p>
+          {{/if}}
+        </div>
 
-      <div>
-        <label class="ml-2 text-sm text-ember-gray" for="tags">Tags</label>
-        <Input
-        id="tags"
-        @type="text"
-        placeholder="tomster,zoey,friends"
-        @value="tomster"
-        class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+        <div>
+          <label class="ml-2 text-sm text-ember-gray" for="tags">Tags</label>
+          <input
+            id="tags"
+            type="text"
+            value={{this.mascots.selected.tags}}
+            placeholder="tomster,zoey,friends"
+            class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+            required
           />
-      </div>
+          {{#if this.errorTags}}
+          <p class="py-1 ml-4 text-xs text-red-600">Deber completar este campo</p>
+          {{else}}
+          <p class="py-1 ml-4 text-xs text-gray-400">Usar separación por coma (,)</p>
+          {{/if}}
+        </div>
 
-      <div>
-        <label class="ml-2 text-sm text-ember-gray" for="stars">Estrellas</label>
-        <Input
-        id="stars"
-        @type="number"
-        min="1"
-        max="5"
-        placeholder="0"
-        @value="5"
-        class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+        <div>
+          <label class="ml-2 text-sm text-ember-gray" for="stars">Estrellas</label>
+          <input
+            id="stars"
+            type="number"
+            value={{this.mascots.selected.stars}}
+            min="1"
+            max="5"
+            placeholder="5"
+            class="w-full px-4 py-2 text-sm font-light text-gray-800 border-2 rounded-full focus:outline-ember-light-blue"
+            required
           />
-      </div>
+          {{#if this.errorStars}}
+          <p class="py-1 ml-4 text-xs text-red-600">Deber completar este campo</p>
+          {{/if}}
+        </div>
+      </form>
 
     </main>
     <footer>
@@ -78,23 +94,34 @@
         <div class="flex justify-center w-full">
           <button
             type="button"
-            {{on 'click' (fn this.deleteMascot '1')}}
+            {{on 'click' (fn this.deleteMascot this.mascots.selected)}}
             class="px-6 py-2 border-2 rounded-full hover:bg-ember hover:text-ember-white hover:border-ember text-ember border-ember"
           >eliminar</button>
         </div>
       </div>
       {{else}}
-      <div class="flex justify-between px-6 py-6 text-sm">
+      <div class="flex {{if this.selectedMascotIsEmpty 'justify-end' 'justify-between'}} px-6 py-6 text-sm">
+        {{#unless this.selectedMascotIsEmpty}}
         <button
           {{on 'click' this.openModalDelete}}
           class="px-6 py-2 border-2 rounded-full hover:bg-ember hover:text-ember-white hover:border-ember text-ember-light-blue border-ember-light-blue"
           type="button"
         >eliminar</button>
+        {{/unless}}
+        {{#if this.selectedMascotIsEmpty}}
         <button
+          disabled={{this.isDisabled}}
           type="button"
           {{on 'click' this.addMascot}}
-          class="px-6 py-2 rounded-full hover:bg-ember-blue hover:border-ember-blue bg-ember-light-blue text-ember-white"
+          class="px-6 py-2 rounded-full disabled:bg-gray-200 hover:bg-ember-blue hover:border-ember-blue bg-ember-light-blue text-ember-white"
         >agregar</button>
+        {{else}}
+        <button
+          type="button"
+          {{on 'click' this.editMascot}}
+          class="px-6 py-2 rounded-full disabled:bg-gray-200 hover:bg-ember-blue hover:border-ember-blue bg-ember-light-blue text-ember-white"
+        >editar</button>
+        {{/if}}
       </div>
       {{/if}}
     </footer>
