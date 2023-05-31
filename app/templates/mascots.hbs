@@ -10,7 +10,7 @@
   <section class="flex flex-col mt-6 md:flex-row">
     <div class="flex flex-col justify-around sm:flex-row md:justify-start w-12/12 md:w-2/12 md:flex-col">
       <h3 class="text-lg font-light tracking-wider">Filtrar</h3>
-      <form {{on 'change' this.onSubmit}} class="flex-1 pl-2 mt-2 text-sm">
+      <form {{on 'change' this.onChangeFilters}} class="flex-1 pl-2 mt-2 text-sm">
         <div class="flex justify-between sm:justify-around md:flex-col md:space-y-2">
           <p class="flex items-center space-x-2">
             <input id="all" name="filter" type="radio" value="all" checked />
@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="mt-6 w-12/12 md:w-10/12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-      {{#each this.allMascots as |mascot|}}
+      {{#each this.getMascots as |mascot|}}
         <Card
           @id={{mascot.id}}
           @title={{mascot.title}}
@@ -40,8 +40,6 @@
           @stars={{mascot.stars}}
         />
       {{/each}}
-      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">4</div>
-      <div class="flex items-center justify-center h-64 shadow rounded-2xl bg-ember-linen">5</div>
     </div>
   </section>
 </div>
