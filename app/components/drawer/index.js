@@ -19,14 +19,28 @@ export default class DrawerComponent extends Component {
   @tracked tags;
   @tracked stars;
 
-  @tracked isDisabled = true;
+  @tracked error = {
+    title: false,
+    tags: false,
+    stars: false,
+  };
+
+  @tracked disabled = true;
 
   pathImages = '/images/mascots/';
   defaultAvatar = 'avatar.svg';
 
+  get selected() {
+    return { ...this.mascots.selected };
+  }
+
+  get isDisabled() {
+    return this.disabled;
+  }
+
   // selected is empty?
   get selectedMascotIsEmpty() {
-    return isEmpty(Object.keys(this.mascots.selected));
+    return isEmpty(Object.keys(this.selected));
   }
 
   // close drawer
@@ -40,6 +54,12 @@ export default class DrawerComponent extends Component {
     this.tags = undefined;
     this.stars = undefined;
     this.showModalDelete = false;
+    this.disabled = true;
+    this.error = {
+      title: false,
+      tags: false,
+      stars: false,
+    };
   }
 
   // avatar hover
@@ -71,11 +91,11 @@ export default class DrawerComponent extends Component {
   editMascot() {
     this.mascots.edit([
       {
-        id: this.mascots.selected.id,
-        title: this.title || this.mascots.selected.title,
+        id: this.selected.id,
+        title: this.title || this.selected.title,
         image: this.imageName,
-        tags: this.tags || this.mascots.selected.tags,
-        stars: this.stars || this.mascots.selected.stars,
+        tags: this.tags || this.selected.tags,
+        stars: this.stars || this.selected.stars,
       },
     ]);
     this.clearDrawer();
@@ -105,13 +125,13 @@ export default class DrawerComponent extends Component {
   get imageSource() {
     return (
       this.imgSrc ||
-      this.pathImages + (this.mascots.selected.image || this.defaultAvatar)
+      this.pathImages + (this.selected.image || this.defaultAvatar)
     );
   }
 
   // get image name
   get imageName() {
-    return this.imgName || this.mascots.selected.image || this.defaultAvatar;
+    return this.imgName || this.selected.image || this.defaultAvatar;
   }
 
   // attributes selected image
@@ -129,20 +149,27 @@ export default class DrawerComponent extends Component {
   }
 
   @action
-  changeInputs(event) {
-    if (event.target.id === 'title') {
-      this.title = event.target.value;
-    }
-    if (event.target.id === 'tags') {
-      this.tags = event.target.value;
-    }
-    if (event.target.id === 'stars') {
-      this.stars = event.target.value;
-    }
-    if (this.title && this.tags && this.stars) {
-      this.isDisabled = false;
+  validateField(event) {
+    const { value, id } = event.target;
+
+    if (value) {
+      this[`${id}`] = value;
+      this.error = {
+        ...this.error,
+        [`${id}`]: false,
+      };
+      if (id === 'stars') if (value < 1 || value > 5) this.error.stars = true;
     } else {
-      this.isDisabled = true;
+      this.error = {
+        ...this.error,
+        [`${id}`]: true,
+      };
+    }
+
+    if (this.title && this.tags && this.stars) {
+      this.disabled = !Object.values(this.error).every(
+        (value) => value === false
+      );
     }
   }
 }
