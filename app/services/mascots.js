@@ -5,14 +5,26 @@ import { tracked } from '@glimmer/tracking';
 
 export default class MascotsService extends Service {
   mascots = A([]);
+  mascotsFetch = A([]);
   @tracked selected = {};
 
-  addAllMascots(mascots) {
+  setMascots(mascots) {
     this.mascots.setObjects(mascots);
+    this.mascotsFetch.addObjects(mascots);
   }
 
   find(id) {
     this.selected = this.mascots.findBy('id', id);
+  }
+
+  filter(param) {
+    const filterd = this.mascotsFetch.filter((mascot) => {
+      return mascot.tags.includes(param);
+    });
+
+    filterd.length > 0
+      ? this.setMascots(filterd)
+      : this.setMascots(this.mascotsFetch);
   }
 
   get length() {
@@ -20,17 +32,23 @@ export default class MascotsService extends Service {
   }
 
   add(newMascot) {
-    this.mascots.pushObject(newMascot);
+    this.mascots.addObject(newMascot);
+    this.mascotsFetch.addObject(newMascot);
   }
 
   edit(editedMascot) {
     const oldMascot = this.mascots.findBy('id', editedMascot[0].id);
     const index = this.mascots.indexOf(oldMascot);
     this.mascots.replace(index, 1, editedMascot);
+
+    const oldMascotFetch = this.mascotsFetch.findBy('id', editedMascot[0].id);
+    const indexFetch = this.mascotsFetch.indexOf(oldMascotFetch);
+    this.mascotsFetch.replace(indexFetch, 1, editedMascot);
   }
 
   remove(mascot) {
     this.mascots.removeObject(mascot);
+    this.mascotsFetch.removeObject(mascot);
   }
 
   @action
