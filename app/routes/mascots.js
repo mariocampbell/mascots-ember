@@ -29,10 +29,6 @@ export default class MascotsRoute extends Route {
   ];
 
   async model() {
-    // const res = await fetch('http://localhost:4200/api/mascots');
-    // const { data } = await res.json();
-
     this.mascots.setMascots(this.data);
-    // return this.data;
   }
 }
