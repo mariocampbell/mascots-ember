@@ -12,6 +12,7 @@ export default class MascotsController extends Controller {
 
   @action
   onChangeFilters(event) {
-    this.mascots.filter(event.target.id);
+    const { id } = event.target;
+    this.mascots.filter(id);
   }
 }
