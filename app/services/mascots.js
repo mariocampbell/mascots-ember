@@ -22,9 +22,11 @@ export default class MascotsService extends Service {
       return mascot.tags.includes(param);
     });
 
-    filterd.length > 0
-      ? this.setMascots(filterd)
-      : this.setMascots(this.mascotsFetch);
+    if (param === 'all') {
+      this.setMascots(this.mascotsFetch);
+    } else {
+      this.setMascots(filterd);
+    }
   }
 
   get length() {
