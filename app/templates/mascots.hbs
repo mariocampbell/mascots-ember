@@ -31,6 +31,7 @@
         </div>
       </form>
     </div>
+    {{#if this.getMascots}}
     <div class="mt-6 w-12/12 md:w-10/12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
       {{#each this.getMascots as |mascot|}}
         <Card
@@ -41,5 +42,10 @@
         />
       {{/each}}
     </div>
+    {{else}}
+    <div class="container flex items-center justify-center mx-auto">
+      <p class="font-light text-center">No hay mascotas para mostrar</p>
+    </div>
+    {{/if}}
   </section>
 </div>

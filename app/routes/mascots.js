@@ -33,6 +33,6 @@ export default class MascotsRoute extends Route {
     // const { data } = await res.json();
 
     this.mascots.setMascots(this.data);
-    return this.data;
+    // return this.data;
   }
 }
