@@ -29,6 +29,7 @@ export default class MascotsRoute extends Route {
   ];
 
   async model() {
-    this.mascots.setMascots(this.data);
+    // this.mascots.setMascots(this.data);
+    this.mascots.fetchMascots();
   }
 }

@@ -7,7 +7,7 @@ export default class MascotsController extends Controller {
   @service mascots;
 
   get getMascots() {
-    return this.mascots.mascots;
+    return this.mascots.mascotsData;
   }
 
   @action

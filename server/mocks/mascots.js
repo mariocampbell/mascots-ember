@@ -4,43 +4,49 @@ module.exports = function (app) {
   const express = require('express');
   let mascotsRouter = express.Router();
 
+  const DATA = [
+    {
+      id: '1',
+      title: 'Fetch Classic Tomster',
+      image: 'tomster.webp',
+      tags: 'tomster',
+      stars: '5',
+    },
+    {
+      id: '2',
+      title: 'Classic Zoey',
+      image: 'zoey.webp',
+      tags: 'zoey',
+      stars: '4',
+    },
+    {
+      id: '3',
+      title: 'Ember Octane',
+      image: 'ember-octane.webp',
+      tags: 'friends',
+      stars: '3',
+    },
+  ];
+
   mascotsRouter.get('/', function (req, res) {
     res.json({
-      data: [
-        {
-          id: '1',
-          title: 'Classic Tomster',
-          image: 'tomster.webp',
-          tags: 'tomster',
-          stars: '5',
-        },
-        {
-          id: '2',
-          title: 'Classic Zoey',
-          image: 'zoey.webp',
-          tags: 'zoey',
-          stars: '4',
-        },
-        {
-          id: '3',
-          title: 'Ember Octane',
-          image: 'ember-octane.webp',
-          tags: 'friends',
-          stars: '3',
-        },
-      ],
+      data: DATA,
     });
   });
 
   mascotsRouter.post('/', function (req, res) {
-    res.status(201).end();
+    const newMascot = req.body;
+    newMascot.id = Math.random().toString(36).substr(2, 9);
+
+    res.status(201).json([...DATA, newMascot]);
   });
 
   mascotsRouter.get('/:id', function (req, res) {
-    res.send({
-      mascots: {
-        id: req.params.id,
-      },
+    const { id } = req.params;
+    const mascot = DATA.find((mascot) => mascot.id === id);
+
+    res.json({
+      data: mascot,
     });
   });
 
