@@ -76,8 +76,7 @@ export default class DrawerComponent extends Component {
   // add mascot
   @action
   addMascot() {
-    this.mascots.add({
-      id: (Math.floor(Math.random() * (1000 - 1)) + 1).toString(),
+    this.mascots.fetchAddMascot({
       title: this.title || 'Ember mascots',
       image: this.imageName,
       tags: this.tags,

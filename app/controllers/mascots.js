@@ -7,11 +7,12 @@ export default class MascotsController extends Controller {
   @service mascots;
 
   get getMascots() {
-    return this.mascots.mascots;
+    return this.mascots.mascotsData;
   }
 
   @action
   onChangeFilters(event) {
-    this.mascots.filter(event.target.id);
+    const { id } = event.target;
+    this.mascots.filter(id);
   }
 }
